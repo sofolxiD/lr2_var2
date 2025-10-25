@@ -3,20 +3,20 @@
 #include <sstream>
 
 Car::Car() : brand(""), model(""), engineVolume(0.0), color(""), transmission("") {
-    std::cout << "[Car] default constructor called\n";
+    std::cout << "Вызов конструктора по умолчанию [Car]\n";
 }
 
 Car::Car(const std::string& brand_, const std::string& model_, double engineVolume_,
          const std::string& color_, const std::string& transmission_)
     : brand(brand_), model(model_), engineVolume(engineVolume_),
       color(color_), transmission(transmission_) {
-    std::cout << "[Car] parameterized constructor called for " << brand << " " << model << "\n";
+    std::cout << "Вызов параметризованного конструктора [Car] " << brand << " " << model << "\n";
 }
 
 Car::Car(const Car& other)
     : Base(other), brand(other.brand), model(other.model),
       engineVolume(other.engineVolume), color(other.color), transmission(other.transmission) {
-    std::cout << "[Car] copy constructor called\n";
+    std::cout << "Вызов конструктора копирования [Car]\n";
 }
 
 Car& Car::operator=(const Car& other) {
@@ -27,12 +27,12 @@ Car& Car::operator=(const Car& other) {
         color = other.color;
         transmission = other.transmission;
     }
-    std::cout << "[Car] assignment operator called\n";
+    std::cout << "Вызван оператор присваивания [Car]\n";
     return *this;
 }
 
 Car::~Car() {
-    std::cout << "[Car] destructor called for " << brand << " " << model << "\n";
+    std::cout << "Вызван деструктор [Car] " << brand << " " << model << "\n";
 }
 
 Base* Car::clone() const {
@@ -40,17 +40,15 @@ Base* Car::clone() const {
 }
 
 void Car::inputFromConsole() {
-    std::cout << "Enter brand: "; std::getline(std::cin, brand);
-    std::cout << "Enter model: "; std::getline(std::cin, model);
-    std::cout << "Enter engine volume (e.g. 1.6): "; std::string tmp; std::getline(std::cin, tmp); engineVolume = atof(tmp.c_str());
-    std::cout << "Enter color: "; std::getline(std::cin, color);
-    std::cout << "Enter transmission (manual/automatic): "; std::getline(std::cin, transmission);
+    std::cout << "Введите марку: "; std::getline(std::cin, brand);
+    std::cout << "Введите модель: "; std::getline(std::cin, model);
+    std::cout << "Введите объем двигателя: "; std::string tmp; std::getline(std::cin, tmp); engineVolume = atof(tmp.c_str());
+    std::cout << "Введите цвет: "; std::getline(std::cin, color);
+    std::cout << "Введите тип КПП: "; std::getline(std::cin, transmission);
 }
 
 void Car::print(std::ostream& os) const {
-    os << "[Car] Brand: " << brand << ", Model: " << model
-       << ", Engine: " << engineVolume << "L"
-       << ", Color: " << color << ", Transmission: " << transmission << "\n";
+    os << "[Car] Mарка: " << brand << ", Модель: " << model << ", Объем двигателя: " << engineVolume << "L" << ", Цвет: " << color << ", КПП: " << transmission << "\n";
 }
 
 std::string Car::serialize() const {

@@ -1,152 +1,140 @@
 #include <iostream>
+#include <conio.h>
+#include <windows.h>
 #include <string>
 #include "Keeper.h"
 #include "Car.h"
 #include "Motorcycle.h"
 #include "Bus.h"
 
-void print_Menu() {
-    std::cout << "\n--- Garage Menu ---\n";
-    std::cout << "1. Add Car\n";
-    std::cout << "2. Add Motorcycle\n";
-    std::cout << "3. Add Bus\n";
-    std::cout << "4. Remove by index\n";
-    std::cout << "5. Show all\n";
-    std::cout << "6. Save to file\n";
-    std::cout << "7. Load from file\n";
-    std::cout << "8. Edit item (replace)\n";
-    std::cout << "9. Exit\n";
-    std::cout << "Enter choice: ";
+using namespace std;
+
+void print_menu(int selected)
+{
+    const char* menu[] = {
+        "1) Добавить автомобиль",
+        "2) Добавить мотоцикл",
+        "3) Добавить автобус",
+        "4) Удалить элемент по индексу",
+        "5) Показать все",
+        "6) Сохранить в файл",
+        "7) Загрузить из файла",
+        "8) Выход"
+    };
+    const int menuSize = 8;
+
+    system("cls");
+    cout << "=== Гараж ===\n";
+    for (int i = 0; i < menuSize; i++) {
+        if (i == selected)
+            cout << "-> " << menu[i] << endl;
+        else
+            cout << "   " << menu[i] << endl;
+    }
 }
 
-int main() {
-    Keeper k;
-    std::string input;
-    bool running = true;
-    while (running) {
-        try {
-            print_Menu();
-            std::getline(std::cin, input);
-            int choice = atoi(input.c_str());
-            switch (choice) {
-                case 1: {
+int main()
+{
+    SetConsoleOutputCP(1251); // русский
+    SetConsoleCP(1251);
+
+    Keeper keeper;
+    int menu_index = 0;
+    char key;
+
+    while (true) {
+        print_menu(menu_index);
+        key = _getch();
+
+        if (key == 72) // стрелка вверх
+            menu_index = (menu_index == 0) ? 7 : menu_index - 1;
+        else if (key == 80) // стрелка вниз
+            menu_index = (menu_index == 7) ? 0 : menu_index + 1;
+        else if (key == 13) { // Enter
+            system("cls");
+            try {
+                switch (menu_index) {
+                case 0: { // добавить автомобиль
                     Car* c = new Car();
-                    std::cout << "Adding new Car. Fill data:\n";
+                    cout << "Добавление автомобиля:\n";
+                    cin.ignore(); // очищаем '\n' после предыдущего ввода
                     c->inputFromConsole();
-                    k.add(c);
+                    keeper.add(c);
+                    cout << "Автомобиль добавлен.\n";
+                    system("pause");
                     break;
                 }
-                case 2: {
+                case 1: { // добавить мотоцикл
                     Motorcycle* m = new Motorcycle();
-                    std::cout << "Adding new Motorcycle. Fill data:\n";
+                    cout << "Добавление мотоцикла:\n";
+                    cin.ignore();
                     m->inputFromConsole();
-                    k.add(m);
+                    keeper.add(m);
+                    cout << "Мотоцикл добавлен.\n";
+                    system("pause");
                     break;
                 }
-                case 3: {
+                case 2: { // добавить автобус
                     Bus* b = new Bus();
-                    std::cout << "Adding new Bus. Fill data:\n";
+                    cout << "Добавление автобуса:\n";
+                    cin.ignore();
                     b->inputFromConsole();
-                    k.add(b);
+                    keeper.add(b);
+                    cout << "Автобус добавлен.\n";
+                    system("pause");
                     break;
                 }
-                case 4: {
-                    std::cout << "Enter index to remove: ";
-                    std::getline(std::cin, input);
-                    int idx = atoi(input.c_str());
-                    k.removeAt(idx);
+                case 3: { // удалить элемент
+                    int idx;
+                    cout << "Введите индекс для удаления: ";
+                    cin >> idx;
+                    keeper.removeAt(idx);
+                    cout << "Элемент удалён.\n";
+                    system("pause");
                     break;
                 }
-                case 5: {
-                    k.showAll();
+                case 4: { // показать все
+                    keeper.showAll();
+                    system("pause");
                     break;
                 }
-                case 6: {
-                    std::cout << "Enter filename to save to: ";
-                    std::getline(std::cin, input);
-                    if (input.empty()) input = "garage.txt";
-                    k.saveToFile(input);
+                case 5: { // сохранить в файл
+                    string filename;
+                    cout << "Введите имя файла (по умолчанию garage.txt): ";
+                    cin.ignore();
+                    getline(cin, filename);
+                    if (filename.empty()) filename = "garage.txt";
+                    keeper.saveToFile(filename);
+                    cout << "Данные сохранены в " << filename << endl;
+                    system("pause");
                     break;
                 }
-                case 7: {
-                    std::cout << "Enter filename to load from: ";
-                    std::getline(std::cin, input);
-                    if (input.empty()) input = "garage.txt";
-                    k.loadFromFile(input);
+                case 6: { // загрузить из файла
+                    string filename;
+                    cout << "Введите имя файла (по умолчанию garage.txt): ";
+                    cin.ignore();
+                    getline(cin, filename);
+                    if (filename.empty()) filename = "garage.txt";
+                    keeper.loadFromFile(filename);
+                    cout << "Данные загружены из " << filename << endl;
+                    system("pause");
                     break;
                 }
-                case 8: {
-                    std::cout << "Enter index to replace/edit: ";
-                    std::getline(std::cin, input);
-                    int idx = atoi(input.c_str());
-                    Base* old = k.getAt(idx);
-                    if (!old) {
-                        std::cout << "No item at that index.\n";
-                        break;
-                    }
-                    std::cout << "Current item:\n" << *old;
-                    std::cout << "Choose new type (1-Car,2-Motorcycle,3-Bus): ";
-                    std::getline(std::cin, input);
-                    int t = atoi(input.c_str());
-                    Base* newObj = nullptr;
-                    if (t == 1) {
-                        Car* c = new Car();
-                        c->inputFromConsole();
-                        newObj = c;
-                    } else if (t == 2) {
-                        Motorcycle* m = new Motorcycle();
-                        m->inputFromConsole();
-                        newObj = m;
-                    } else if (t == 3) {
-                        Bus* b = new Bus();
-                        b->inputFromConsole();
-                        newObj = b;
-                    } else {
-                        std::cout << "Invalid type\n";
-                        break;
-                    }
-
-                    k.removeAt(idx);
-
-                    k.add(newObj);
-
-                    int last = k.size() - 1;
-                    if (idx != last) {
-
-                        Base* a = k.getAt(idx);
-                        Base* bptr = k.getAt(last);
-                        //k.items[idx] = bptr;
-                        Keeper temp = k; 
-                        k.clear();
-                        for (int i = 0; i < temp.size(); i++) {
-                            if (i == idx) {
-                                k.add(bptr);
-                            } else if (i == last) {
-                                k.add(a);
-                            } else {
-                                k.add(temp.getAt(i));
-                            }
-                        }
-                        std::cout << "Note: item replaced (old removed) and new item added to the end of list.\n";
-                    }
-                    break;
+                case 7: { // выход
+                    cout << "Выход из программы...\n";
+                    system("pause");
+                    return 0;
                 }
-                case 9: {
-                    running = false;
-                    break;
                 }
-                default:
-                    std::cout << "Unknown choice\n";
             }
-        } catch (const GarageException& ge) {
-            std::cout << "Error: " << ge.what() << "\n";
-        } catch (const std::exception& ex) {
-            std::cout << "Std exception: " << ex.what() << "\n";
-        } catch (...) {
-            std::cout << "Unknown error occurred\n";
+            catch (const GarageException& ge) {
+                cout << "Ошибка: " << ge.what() << endl;
+                system("pause");
+            }
+            catch (const exception& ex) {
+                cout << "Стандартное исключение: " << ex.what() << endl;
+                system("pause");
+            }
         }
     }
-
-    std::cout << "Exiting program. Goodbye!\n";
-    return 0;
 }
