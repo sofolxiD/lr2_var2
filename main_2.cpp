@@ -24,7 +24,7 @@ void print_menu(int selected)
     const int menuSize = 8;
 
     system("cls");
-    cout << "=== Гараж ===\n";
+    cout << "=== Гараж ===\n\n";
     for (int i = 0; i < menuSize; i++) {
         if (i == selected)
             cout << "-> " << menu[i] << endl;
