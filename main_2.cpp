@@ -10,8 +10,8 @@
 using namespace std;
 
 void print_menu(int selected)
-{
-    const char* menu[] = {
+{            
+    const char *menu[] = {
         "1) Добавить автомобиль",
         "2) Добавить мотоцикл",
         "3) Добавить автобус",
@@ -19,13 +19,13 @@ void print_menu(int selected)
         "5) Показать все",
         "6) Сохранить в файл",
         "7) Загрузить из файла",
-        "8) Выход"
-    };
+        "8) Выход"};
     const int menuSize = 8;
 
     system("cls");
     cout << "---- Гараж ----\n";
-    for (int i = 0; i < menuSize; i++) {
+    for (int i = 0; i < menuSize; i++)
+    {
         if (i == selected)
             cout << "-> " << menu[i] << endl;
         else
@@ -33,7 +33,8 @@ void print_menu(int selected)
     }
 }
 
-int main() {
+int main()
+{
     SetConsoleOutputCP(1251); // русский
     SetConsoleCP(1251);
 
@@ -41,7 +42,8 @@ int main() {
     int menu_index = 0;
     char key;
 
-    while (true) {
+    while (true)
+    {
         print_menu(menu_index);
         key = _getch();
 
@@ -49,12 +51,16 @@ int main() {
             menu_index = (menu_index == 0) ? 7 : menu_index - 1;
         else if (key == 80) // стрелка вниз
             menu_index = (menu_index == 7) ? 0 : menu_index + 1;
-        else if (key == 13) { // Enter
+        else if (key == 13)
+        { // Enter
             system("cls");
-            try {
-                switch (menu_index) {
-                case 0: { // добавить автомобиль
-                    Car* c = new Car();
+            try
+            {
+                switch (menu_index)
+                {
+                case 0:
+                { // добавить автомобиль
+                    Car *c = new Car();
                     cout << "--- Добавление автомобиля ---\n";
                     c->inputFromConsole();
                     keeper.add(c);
@@ -62,27 +68,28 @@ int main() {
                     system("pause");
                     break;
                 }
-                case 1: { // добавить мотоцикл
-                    Motorcycle* m = new Motorcycle();
-                    cout << "Добавление мотоцикла:\n";
-                    cin.ignore();
+                case 1:
+                { // добавить мотоцикл
+                    Motorcycle *m = new Motorcycle();
+                    cout << "--- Добавление мотоцикла ---\n";
                     m->inputFromConsole();
                     keeper.add(m);
                     cout << "Мотоцикл добавлен.\n";
                     system("pause");
                     break;
                 }
-                case 2: { // добавить автобус
-                    Bus* b = new Bus();
-                    cout << "Добавление автобуса:\n";
-                    cin.ignore();
+                case 2:
+                { // добавить автобус
+                    Bus *b = new Bus();
+                    cout << "--- Добавление автобуса ---\n";
                     b->inputFromConsole();
                     keeper.add(b);
                     cout << "Автобус добавлен.\n";
                     system("pause");
                     break;
                 }
-                case 3: { // удалить элемент
+                case 3:
+                { // удалить элемент
                     int idx;
                     cout << "Введите индекс для удаления: ";
                     cin >> idx;
@@ -91,45 +98,42 @@ int main() {
                     system("pause");
                     break;
                 }
-                case 4: { // показать все
+                case 4:
+                { // показать все
                     keeper.showAll();
                     system("pause");
                     break;
                 }
-                case 5: { // сохранить в файл
-                    string filename;
-                    cout << "Введите имя файла (по умолчанию garage.txt): ";
-                    cin.ignore();
-                    getline(cin, filename);
-                    if (filename.empty()) filename = "garage.txt";
-                    keeper.saveToFile(filename);
-                    cout << "Данные сохранены в " << filename << endl;
+
+                case 5:
+                { // сохранить в файл
+                    keeper.saveToFile("garage.txt");
+                    cout << "Данные сохранены в garage.txt" << endl;
                     system("pause");
                     break;
                 }
-                case 6: { // загрузить из файла
-                    string filename;
-                    cout << "Введите имя файла (по умолчанию garage.txt): ";
-                    cin.ignore();
-                    getline(cin, filename);
-                    if (filename.empty()) filename = "garage.txt";
-                    keeper.loadFromFile(filename);
-                    cout << "Данные загружены из " << filename << endl;
+                case 6:
+                { // загрузить из файла
+                    keeper.loadFromFile("garage.txt");
+                    cout << "Данные загружены из garage.txt" << endl;
                     system("pause");
                     break;
                 }
-                case 7: { // выход
-                    cout << "Выход из программы...\n";
+                case 7:
+                { // выход
+                    cout << "Выход.\n";
                     system("pause");
                     return 0;
                 }
                 }
             }
-            catch (const GarageException& ge) {
+            catch (const GarageException &ge)
+            {
                 cout << "Ошибка: " << ge.what() << endl;
                 system("pause");
             }
-            catch (const exception& ex) {
+            catch (const exception &ex)
+            {
                 cout << "Стандартное исключение: " << ex.what() << endl;
                 system("pause");
             }

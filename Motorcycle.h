@@ -2,18 +2,19 @@
 #define MOTORCYCLE_H
 
 #include "Base.h"
+#include <string>
 
-class Motorcycle : public Base {
-private:
+class Motorcycle : public Base
+{
+public:
     std::string brand;
     std::string model;
     double engineVolume;
-    double power; // horsepower
-    std::string terrain; // e.g., "on-road", "off-road"
-public:
+    int power;
+    std::string terrain;
+
     Motorcycle();
-    Motorcycle(const std::string& brand, const std::string& model, double engineVolume,
-               double power, const std::string& terrain);
+    Motorcycle(const std::string& brand_, const std::string& model_, double engineVolume_, int power_, const std::string& terrain_);
     Motorcycle(const Motorcycle& other);
     Motorcycle& operator=(const Motorcycle& other);
     ~Motorcycle();

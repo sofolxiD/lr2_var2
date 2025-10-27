@@ -1,34 +1,30 @@
 #include "Base.h"
+#include "Car.h"
+#include "Motorcycle.h"
+#include "Bus.h"
 
 Base::Base() {
-    std::cout << "Вызывается конструктор по умолчанию [Base]\n";
+    std::cout << "Вызван конструктор по умолчанию [Base]\n";
 }
 
 Base::Base(const Base& other) {
     (void)other;
-    std::cout << "Вызывается конструктор копирования [Base]\n";
+    std::cout << "Вызван конструктор копирования [Base]\n";
 }
 
 Base::~Base() {
-    std::cout << "Вызывается деструктор [Base]\n";
+    std::cout << "Вызван деструктор [Base]\n";
 }
 
 void Base::inputFromConsole() {
     // default: nothing. Derived classes override.
 }
 
-#include "Car.h"
-#include "Motorcycle.h"
-#include "Bus.h"
-
-// Factory: create derived object from a serialized line.
-// Format (we choose): TYPE|field1|field2|...
-// TYPE: C - car, M - motorcycle, B - bus
 Base* Base::createFromSerialized(const std::string& line) {
     if (line.empty()) return nullptr;
     char type = line[0];
     std::string rest;
-    if (line.size() >= 2 && line[1] == '|') rest = line.substr(2);
+    if (line.size() >= 2 && line[1] == ',') rest = line.substr(2);
     else rest = line.substr(1);
 
     std::stringstream ss(rest);

@@ -15,11 +15,10 @@ public:
     virtual Base* clone() const = 0;
     virtual void inputFromConsole();
     virtual void print(std::ostream& os) const = 0;
-    virtual std::string serialize() const = 0; // one-line text representation
-    // create object from a serialization line (factory method)
+    virtual std::string serialize() const = 0;
+
     static Base* createFromSerialized(const std::string& line);
 
-    // operator overload for convenient printing
     friend std::ostream& operator<<(std::ostream& os, const Base& b) {
         b.print(os);
         return os;

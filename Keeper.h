@@ -17,8 +17,8 @@ public:
     Keeper& operator=(const Keeper& other);
     ~Keeper();
 
-    void add(Base* obj); // takes ownership
-    void removeAt(int index); // delete object at index
+    void add(Base* obj);
+    void removeAt(int index); 
     void showAll() const;
     int size() const { return count; }
     Base* getAt(int index) const;

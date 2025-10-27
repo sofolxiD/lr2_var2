@@ -16,8 +16,7 @@ Car::Car(const std::string& brand_, const std::string& model_, double engineVolu
 }
 
 Car::Car(const Car& other)
-    : Base(other), brand(other.brand), model(other.model),
-    engineVolume(other.engineVolume), color(other.color), transmission(other.transmission) {
+    : Base(other), brand(other.brand), model(other.model), engineVolume(other.engineVolume), color(other.color), transmission(other.transmission) {
     std::cout << "Вызван конструктор копирования [Car]\n";
 }
 
@@ -68,6 +67,7 @@ void Car::inputFromConsole() {
 
     while (true) {
         system("cls");
+        std::cout << "--- Добавление автомобиля ---\n";
         std::cout << "Выберите тип КПП:\n";
         for (int i = 0; i < 4; i++) {
             if (i == KPP_index)

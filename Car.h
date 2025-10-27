@@ -13,7 +13,7 @@ private:
     std::string transmission;  // Тип КПП (Механика, Автомат, Робот, Вариатор)
 
 public:
-    // --- Конструкторы ---
+    //Конструкторы
     Car();  // Без параметров
     Car(const std::string& brand, const std::string& model, double engineVolume,
         const std::string& color, const std::string& transmission);
@@ -21,14 +21,13 @@ public:
     Car& operator=(const Car& other);    // Оператор присваивания
     ~Car();                              // Деструктор
 
-    // --- Переопределения виртуальных методов базового класса ---
+    // Переопределения виртуальных методов базового класса
     Base* clone() const override;        // Клонирование объекта
     void inputFromConsole() override;    // Ввод данных с клавиатуры (стрелочное меню КПП)
     void print(std::ostream& os) const override;  // Вывод на экран
     std::string serialize() const override;       // Сериализация (для записи в файл)
     void deserializeFromStream(std::stringstream& ss); // Десериализация из файла
 
-    // --- Set / Get методы ---
     void setBrand(const std::string& b) { brand = b; }
     void setModel(const std::string& m) { model = m; }
     void setEngineVolume(double v) { engineVolume = v; }
