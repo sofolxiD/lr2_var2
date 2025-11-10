@@ -35,7 +35,6 @@ Car& Car::operator=(const Car& other) {
 Car::~Car() {
     std::cout << "Вызван деструктор [Car] " << brand << " " << model << "\n";
 }
-
 Base* Car::clone() const {
     return new Car(*this);
 }
@@ -60,7 +59,7 @@ void Car::inputFromConsole() {
         "Automatic",
         "AMT",
         "CVT"
-    };
+    };  //(Механика, Автомат, Робот, Вариатор)
 
     int KPP_index = 0;
     char key;

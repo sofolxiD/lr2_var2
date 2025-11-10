@@ -4,7 +4,7 @@
 #include "Bus.h"
 
 Base::Base() {
-    std::cout << "Вызван конструктор по умолчанию (Base)\n";
+    std::cout << "Вызван конструктор по умолчанию [Base]\n";
 }
 
 Base::Base(const Base& other) {
@@ -17,7 +17,6 @@ Base::~Base() {
 }
 
 void Base::inputFromConsole() {
-    // default: nothing. Derived classes override.
 }
 
 Base* Base::createFromSerialized(const std::string& line) {
@@ -50,6 +49,6 @@ Base* Base::createFromSerialized(const std::string& line) {
             throw GarageException("Error");
         }
     } catch (std::bad_alloc&) {
-        throw GarageException("Ошибка выделения памяти");
+        throw GarageException("ошибка выделения памяти");
     }
 }

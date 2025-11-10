@@ -1,6 +1,5 @@
 #ifndef MOTORCYCLE_H
 #define MOTORCYCLE_H
-
 #include "Base.h"
 #include <string>
 

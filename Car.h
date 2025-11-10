@@ -12,8 +12,7 @@ private:
     std::string color;         // Цвет
     std::string transmission;  // Тип КПП (Механика, Автомат, Робот, Вариатор)
 
-public:
-    //Конструкторы
+public:     //Конструкторы
     Car();  // Без параметров
     Car(const std::string& brand, const std::string& model, double engineVolume,
         const std::string& color, const std::string& transmission);

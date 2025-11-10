@@ -68,7 +68,6 @@ void Motorcycle::print(std::ostream& os) const {
         << "hp, Местность: " << terrain << "\n\n";
 }
 
-
 std::string Motorcycle::serialize() const {
     std::stringstream ss;
     ss << "Motorcycle," << brand << "," << model << "," << engineVolume << "," << power << "," << terrain;

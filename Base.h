@@ -16,7 +16,6 @@ public:
     virtual void inputFromConsole();
     virtual void print(std::ostream& os) const = 0;
     virtual std::string serialize() const = 0;
-
     static Base* createFromSerialized(const std::string& line);
 
     friend std::ostream& operator<<(std::ostream& os, const Base& b) {

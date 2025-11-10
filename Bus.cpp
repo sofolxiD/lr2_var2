@@ -36,7 +36,6 @@ Bus& Bus::operator=(const Bus& other) {
 Bus::~Bus() {
     std::cout << "Вызван деструктор [Bus] " << brand << " " << model << "\n";
 }
-
 Base* Bus::clone() const {
     return new Bus(*this);
 }

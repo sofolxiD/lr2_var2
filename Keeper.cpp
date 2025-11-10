@@ -6,7 +6,7 @@ Keeper::Keeper(int initialCapacity) : items(nullptr), count(0), capacity(initial
     if (capacity <= 0) capacity = 4;
     items = new Base*[capacity];
     for (int i = 0; i < capacity; ++i) items[i] = nullptr;
-    std::cout << "(Keeper) cоздан с ёмкостью " << capacity << "\n";
+    std::cout << "[Keeper] cоздан с ёмкостью " << capacity << "\n";
 }
 
 Keeper::Keeper(const Keeper& other) : items(nullptr), count(other.count), capacity(other.capacity) {
@@ -15,7 +15,7 @@ Keeper::Keeper(const Keeper& other) : items(nullptr), count(other.count), capaci
         items[i] = other.items[i] ? other.items[i]->clone() : nullptr;
     }
     for (int i = count; i < capacity; ++i) items[i] = nullptr;
-    std::cout << "Вызван конструктор копирования (Keeper)\n";
+    std::cout << "Вызван конструктор копирования [Keeper]\n";
 }
 
 Keeper& Keeper::operator=(const Keeper& other) {
@@ -30,14 +30,14 @@ Keeper& Keeper::operator=(const Keeper& other) {
         }
         for (int i = count; i < capacity; ++i) items[i] = nullptr;
     }
-    std::cout << "Вызван оператор присваивания (Keeper)\n";
+    std::cout << "Вызван оператор присваивания [Keeper]\n";
     return *this;
 }
 
 Keeper::~Keeper() {
     clear();
     delete [] items;
-    std::cout << "Вызван деструктор (Keeper)\n";
+    std::cout << "Вызван деструктор [Keeper]\n";
 }
 
 void Keeper::resizeUp() {
@@ -48,13 +48,13 @@ void Keeper::resizeUp() {
     delete [] items;
     items = newItems;
     capacity = newCap;
-    std::cout << "Размер (Keeper) изменён " << capacity << "\n";
+    std::cout << "Размер [Keeper] изменён " << capacity << "\n";
 }
 
 void Keeper::add(Base* obj) {
     if (count >= capacity) resizeUp();
     items[count++] = obj;
-    std::cout << "Объект (Keeper) добавлен. Новый размер: " << count << "\n";
+    std::cout << "Объект [Keeper] добавлен. Новый размер: " << count << "\n";
 }
 
 void Keeper::removeAt(int index) {
@@ -62,7 +62,7 @@ void Keeper::removeAt(int index) {
     for (int i = index; i < count - 1; ++i) items[i] = items[i+1];
     items[count-1] = nullptr;
     --count;
-    std::cout << "Объект (Keeper) удален по индексу " << index << ". Новый размер: " << count << "\n";
+    std::cout << "Объект [Keeper] удален по индексу " << index << ". Новый размер: " << count << "\n";
 }
 
 void Keeper::showAll() const {
@@ -99,7 +99,7 @@ void Keeper::loadFromFile(const std::string& filename) {
         if (obj) add(obj);
     }
     ifs.close();
-    std::cout << "(Keeper) загрузил элементы из файла:" << filename << "\n";
+    std::cout << "[Keeper] загрузил элементы из файла:" << filename << "\n";
 }
 
 void Keeper::clear() {

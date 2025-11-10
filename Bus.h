@@ -11,7 +11,7 @@ public:
     std::string model;       // Модель автобуса
     int seated;              // Сидячих мест
     int totalSeats;          // Всего мест
-    std::string destination; // Тип маршрута (Городской, Междугородний и т.д.)
+    std::string destination; // Тип маршрута
 
     Bus();   // Конструктор по умолчанию
     Bus(const std::string& brand_, const std::string& model_,
