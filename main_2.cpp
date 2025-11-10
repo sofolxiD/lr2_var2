@@ -35,9 +35,9 @@ void print_menu(int selected)
 
 int main()
 {
-    SetConsoleOutputCP(1251); // русский
+    SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
-
+    
     Keeper keeper;
     int menu_index = 0;
     char key;
