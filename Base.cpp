@@ -4,16 +4,16 @@
 #include "Bus.h"
 
 Base::Base() {
-    std::cout << "Вызван конструктор по умолчанию [Base]\n";
+    std::cout << "Вызван конструктор по умолчанию (Base)\n";
 }
 
 Base::Base(const Base& other) {
     (void)other;
-    std::cout << "Вызван конструктор копирования [Base]\n";
+    std::cout << "Вызван конструктор копирования (Base)\n";
 }
 
 Base::~Base() {
-    std::cout << "Вызван деструктор [Base]\n";
+    std::cout << "Вызван деструктор (Base)\n";
 }
 
 void Base::inputFromConsole() {

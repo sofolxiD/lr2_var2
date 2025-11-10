@@ -105,7 +105,7 @@ void Car::print(std::ostream& os) const {
 
 std::string Car::serialize() const {
     std::stringstream ss;
-    ss << "Car, " << brand << ", " << model << ", " << engineVolume << ", " << color << ", " << transmission;
+    ss << "Car," << brand << "," << model << "," << engineVolume << "," << color << "," << transmission;
     return ss.str();
 }
 

@@ -6,7 +6,7 @@ Keeper::Keeper(int initialCapacity) : items(nullptr), count(0), capacity(initial
     if (capacity <= 0) capacity = 4;
     items = new Base*[capacity];
     for (int i = 0; i < capacity; ++i) items[i] = nullptr;
-    std::cout << "[Keeper] created with capacity " << capacity << "\n";
+    std::cout << "(Keeper) cоздан с ёмкостью " << capacity << "\n";
 }
 
 Keeper::Keeper(const Keeper& other) : items(nullptr), count(other.count), capacity(other.capacity) {
@@ -48,27 +48,25 @@ void Keeper::resizeUp() {
     delete [] items;
     items = newItems;
     capacity = newCap;
-    std::cout << "[Keeper] resized to capacity " << capacity << "\n";
+    std::cout << "Размер (Keeper) изменён " << capacity << "\n";
 }
 
 void Keeper::add(Base* obj) {
-    if (!obj) throw GarageException("Null pointer passed to add()");
     if (count >= capacity) resizeUp();
     items[count++] = obj;
-    std::cout << "[Keeper] object added. New size: " << count << "\n";
+    std::cout << "Объект (Keeper) добавлен. Новый размер: " << count << "\n";
 }
 
 void Keeper::removeAt(int index) {
-    if (index < 0 || index >= count) throw GarageException("Index out of range in removeAt");
     delete items[index];
     for (int i = index; i < count - 1; ++i) items[i] = items[i+1];
     items[count-1] = nullptr;
     --count;
-    std::cout << "Объект (Keeper) удален по индексу " << index << ". New size: " << count << "\n";
+    std::cout << "Объект (Keeper) удален по индексу " << index << ". Новый размер: " << count << "\n";
 }
 
 void Keeper::showAll() const {
-    std::cout << "Keeper contents (count = " << count << "):\n";
+    std::cout << "Содержимое хранилища (count = " << count << "):\n";
     for (int i = 0; i < count; ++i) {
         std::cout << i << ": " << *items[i];
     }
@@ -80,19 +78,19 @@ Base* Keeper::getAt(int index) const {
 }
 
 void Keeper::saveToFile(const std::string& filename) const {
-    std::ofstream ofs(filename.c_str());
-    if (!ofs) throw GarageException("Failed to open file for writing: " + filename);
+    std::ofstream ofs (filename.c_str());
+    if (!ofs) throw GarageException("Ошибка открытия файла для записи");
+    
     for (int i = 0; i < count; ++i) {
         std::string line = items[i]->serialize();
         ofs << line << "\n";
     }
     ofs.close();
-    std::cout << "[Keeper] saved " << count << " items to file: " << filename << "\n";
 }
 
 void Keeper::loadFromFile(const std::string& filename) {
     std::ifstream ifs(filename.c_str());
-    if (!ifs) throw GarageException("Failed to open file for reading: " + filename);
+    if (!ifs) throw GarageException("Ошибка чтения файла");
     clear();
     std::string line;
     while (std::getline(ifs, line)) {
@@ -101,7 +99,7 @@ void Keeper::loadFromFile(const std::string& filename) {
         if (obj) add(obj);
     }
     ifs.close();
-    std::cout << "[Keeper] loaded items from file: " << filename << "\n";
+    std::cout << "(Keeper) загрузил элементы из файла:" << filename << "\n";
 }
 
 void Keeper::clear() {
@@ -110,5 +108,4 @@ void Keeper::clear() {
         items[i] = nullptr;
     }
     count = 0;
-    std::cout << "[Keeper] cleared all items\n";
 }

@@ -66,7 +66,7 @@ void Bus::print(std::ostream& os) const {
        << ", Модель: " << model
        << ", Сидячих мест: " << seated
        << ", Всего мест: " << totalSeats
-       << ", Конечный пункт: " << destination << "\n";
+       << ", Конечный пункт: " << destination << "\n\n";
 }
 
 std::string Bus::serialize() const {
