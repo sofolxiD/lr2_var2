@@ -1,3 +1,0 @@
-Car,bmv,x5,4,red,Automatic
-Motorcycle,qwer,753,2,150,xds c gfc tryfdc f yt fd gftcd cftr 
-Bus,Sc,456,50,90,asdfg
