@@ -1,38 +1,34 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include <limits>
 #include "Keeper.h"
 #include "TextProcessor.h"
 
 using namespace std;
 
-void printMenu(int selected) {
-    const char* menu[] = {
-        "1) Добавить нового студента",
-        "2) Добавить студента на позицию",
-        "3) Редактировать студента",
-        "4) Удалить студента",
-        "5) Показать всех студентов",
-        "6) Показать успевающих студентов (4 и 5)",
-        "7) Сохранить в файл",
-        "8) Загрузить из файла",
-        "9) Обработать текст (задание 2)",
-        "10) Выход"
-    };
-    
-    const int menuSize = 10;
-    
+void showMenu() {
     system("cls");
-    cout << "=== Управление студентами ===" << endl;
-    cout << "==============================" << endl;
-    
-    for (int i = 0; i < menuSize; i++) {
-        if (i == selected) {
-            cout << "-> " << menu[i] << endl;
-        } else {
-            cout << "   " << menu[i] << endl;
-        }
-    }
+    cout << "=================================" << endl;
+    cout << "         УПРАВЛЕНИЕ СТУДЕНТАМИ" << endl;
+    cout << "=================================" << endl;
+    cout << "1. Добавить студента" << endl;
+    cout << "2. Добавить на позицию" << endl;
+    cout << "3. Редактировать студента" << endl;
+    cout << "4. Удалить студента" << endl;
+    cout << "5. Показать всех" << endl;
+    cout << "6. Показать отличников (4 и 5)" << endl;
+    cout << "7. СОХРАНИТЬ в stud.txt" << endl;
+    cout << "8. ЗАГРУЗИТЬ из stud.txt" << endl;
+    cout << "9. Найти слово в text.txt" << endl;
+    cout << "0. ВЫХОД" << endl;
+    cout << "=================================" << endl;
+    cout << "Выбор: ";
+}
+
+void pressEnter() {
+    cout << "\nНажмите Enter...";
+    cin.get();
 }
 
 int main() {
@@ -40,57 +36,116 @@ int main() {
     SetConsoleCP(1251);
     
     Keeper keeper;
-    int menuIndex = 0;
-    char key;
+    int choice;
     
-    while (true) {
-        printMenu(menuIndex);
-        key = _getch();
+    do {
+        showMenu();
+        cin >> choice;
+        cin.ignore();
         
-        if (key == 72) { // Стрелка вверх
-            menuIndex = (menuIndex == 0) ? 9 : menuIndex - 1;
-        } else if (key == 80) { // Стрелка вниз
-            menuIndex = (menuIndex == 9) ? 0 : menuIndex + 1;
-        } else if (key == 13) { // Enter
-            system("cls");
-            
-            try {
-                switch (menuIndex) {
-                    case 0: { // Добавить студента
-                        Student* s = new Student();
-                        cout << "=== Добавление студента ===" << endl;
-                        cin >> *s;
-                        keeper.add(s);
-                        cout << "Студент добавлен!" << endl;
-                        system("pause");
-                        break;
-                    }
-                    case 4: { // Удалить студента
-                        int index;
-                        cout << "Введите индекс для удаления: ";
-                        cin >> index;
-                        cin.ignore();
-                        keeper.remove(index);
-                        cout << "Студент удален!" << endl;
-                        system("pause");
-                        break;
-                    }
-                    case 5: { // Показать успевающих
-                        keeper.displayGoodStudents();
-                        system("pause");
-                        break;
-                    }
-                    case 9: { // Выход
-                        cout << "Выход из программы..." << endl;
-                        return 0;
+        switch (choice) {
+            case 1: {
+                Student* s = new Student();
+                cin >> *s;
+                keeper.add(s);
+                cout << "Добавлено!" << endl;
+                pressEnter();
+                break;
+            }
+            case 2: {
+                int pos;
+                cout << "Позиция (0-" << keeper.getSize() << "): ";
+                cin >> pos;
+                cin.ignore();
+                
+                if (pos < 0 || pos > keeper.getSize()) {
+                    cout << "Неверная позиция!" << endl;
+                } else {
+                    Student* s = new Student();
+                    cin >> *s;
+                    keeper.insert(s, pos);
+                    cout << "Вставлено!" << endl;
+                }
+                pressEnter();
+                break;
+            }
+            case 3: {
+                if (keeper.getSize() == 0) {
+                    cout << "Список пуст!" << endl;
+                } else {
+                    int idx;
+                    cout << "Индекс (0-" << keeper.getSize()-1 << "): ";
+                    cin >> idx;
+                    cin.ignore();
+                    
+                    if (idx < 0 || idx >= keeper.getSize()) {
+                        cout << "Неверный индекс!" << endl;
+                    } else {
+                        keeper.edit(idx);
+                        cout << "Отредактировано!" << endl;
                     }
                 }
-            } catch (const exception& e) {
-                cout << "Ошибка: " << e.what() << endl;
-                system("pause");
+                pressEnter();
+                break;
+            }
+            case 4: {
+                if (keeper.getSize() == 0) {
+                    cout << "Список пуст!" << endl;
+                } else {
+                    int idx;
+                    cout << "Индекс для удаления (0-" << keeper.getSize()-1 << "): ";
+                    cin >> idx;
+                    cin.ignore();
+                    
+                    if (idx < 0 || idx >= keeper.getSize()) {
+                        cout << "Неверный индекс!" << endl;
+                    } else {
+                        keeper.remove(idx);
+                        cout << "Удалено!" << endl;
+                    }
+                }
+                pressEnter();
+                break;
+            }
+            case 5: {
+                keeper.showAll();
+                pressEnter();
+                break;
+            }
+            case 6: {
+                keeper.showGoodStudents();
+                pressEnter();
+                break;
+            }
+            case 7: {
+                keeper.saveToFile();
+                pressEnter();
+                break;
+            }
+            case 8: {
+                keeper.loadFromFile();
+                pressEnter();
+                break;
+            }
+            case 9: {
+                string word;
+                cout << "Введите слово для поиска: ";
+                getline(cin, word);
+                TextProcessor::findSentencesWithWord(word);
+                pressEnter();
+                break;
+            }
+            case 0: {
+                cout << "Выход из программы..." << endl;
+                break;
+            }
+            default: {
+                cout << "Неверный выбор!" << endl;
+                pressEnter();
             }
         }
-    }
+        
+    } while (choice != 0);
     
     return 0;
 }
