@@ -5,31 +5,35 @@
 
 class Keeper {
 private:
-    Student** students;
-    int size;
-    int capacity;
+    Student** students;  // Массив указателей на студентов (двойной указатель)
+    int size;            // Текущее количество студентов
+    int capacity;        // Сколько студентов может вместить массив
 
-    void resize();
+    void resize();       // Увеличивает размер массива
 
 public:
-    Keeper();
-    ~Keeper();
+    Keeper();           // Конструктор
+    ~Keeper();          // Деструктор
     
-    void add(Student* s);
-    void insert(Student* s, int pos);
-    void remove(int index);
-    void edit(int index);
+    // Основные операции
+    void add(Student* s);           // Добавить в конец
+    void insert(Student* s, int pos); // Вставить на позицию
+    void remove(int index);         // Удалить по индексу
+    void edit(int index);           // Редактировать по индексу
     
-    void showAll() const;
-    void showGoodStudents() const;
+    // Вывод на экран
+    void showAll() const;           // Показать всех
+    void showGoodStudents() const;  // Показать хороших студентов
     
-    int getSize() const { return size; }
-    Student* getStudent(int index) const;
+    // Геттеры (получить данные)
+    int getSize() const { return size; }  // Получить количество студентов
+    Student* getStudent(int index) const; // Получить студента по индексу
     
-    void saveToFile();
-    void loadFromFile();
+    // Работа с файлами
+    void saveToFile();   // Сохранить в файл stud.txt
+    void loadFromFile(); // Загрузить из файла stud.txt
     
-    void sortByAverage();
+    void sortByAverage(); // Сортировка по среднему баллу
 };
 
 #endif
